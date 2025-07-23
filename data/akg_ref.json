@@ -1,0 +1,54 @@
+[
+  {
+    "kelompok_umur": "0-5 bulan",
+    "min_bulan": 0,
+    "max_bulan": 5,
+    "energi": 550,
+    "protein": 9,
+    "lemak": 31,
+    "karbohidrat": 59,
+    "serat": 0,
+    "air": 700,
+    "zat_besi": 0.3,
+    "seng": 1.1
+  },
+  {
+    "kelompok_umur": "1-3 tahun",
+    "min_bulan": 12,
+    "max_bulan": 47,
+    "energi": 1350,
+    "protein": 20,
+    "lemak": 45,
+    "karbohidrat": 215,
+    "serat": 19,
+    "air": 1150,
+    "zat_besi": 7,
+    "seng": 3,
+    "kalsium": 650,
+    "vit_d": 15
+  },
+  {
+    "kelompok_umur": "19-29 tahun",
+    "gender": "laki-laki",
+    "min_bulan": 228,
+    "max_bulan": 359,
+    "energi": 2650,
+    "protein": 65,
+    "lemak": 75,
+    "karbohidrat": 430,
+    "serat": 37,
+    "air": 2500
+  },
+  {
+    "kelompok_umur": "19-29 tahun",
+    "gender": "perempuan",
+    "min_bulan": 228,
+    "max_bulan": 359,
+    "energi": 2250,
+    "protein": 60,
+    "lemak": 65,
+    "karbohidrat": 360,
+    "serat": 30,
+    "air": 2300
+  }
+]

@@ -12,6 +12,9 @@ const pool = mysql.createPool({
   connectionLimit: 10,
   queueLimit: 0
 })
+app.use(express.json());
+const rekomendasiRoutes = require('./src/routes/rekomendasi.route');
+app.use('/api', rekomendasiRoutes);
 async function connectToDb() {
   try {
     const connection = await pool.getConnection();

@@ -1,0 +1,61 @@
+[
+  {
+    "id": 1,
+    "nama_makanan": "Nasi Putih",
+    "golongan_dbmp": "Karbohidrat",
+    "sub_golongan_protein": null,
+    "urt_standar": {
+      "jumlah": 0.75,
+      "satuan": "gelas",
+      "berat_g": 100
+    },
+    "kandungan_gizi_per_100g": [
+      {"nama": "energi", "kuantitas": 175, "satuan": "kcal"},
+      {"nama": "protein", "kuantitas": 4.0, "satuan": "g"},
+      {"nama": "lemak", "kuantitas": 0.1, "satuan": "g"},
+      {"nama": "karbohidrat", "kuantitas": 40.0, "satuan": "g"},
+      {"nama": "serat", "kuantitas": 0.4, "satuan": "g"},
+      {"nama": "zat_besi", "kuantitas": 0.2, "satuan": "mg"},
+      {"nama": "seng", "kuantitas": 0.5, "satuan": "mg"},
+      {"nama": "vit_a_rae", "kuantitas": 0, "satuan": "mcg"}
+    ]
+  },
+  {
+    "id": 3,
+    "nama_makanan": "Ayam Goreng (Dada tanpa kulit)",
+    "golongan_dbmp": "Protein",
+    "sub_golongan_protein": "Hewani Lemak Sedang",
+    "urt_standar": {
+      "jumlah": 1,
+      "satuan": "potong sedang",
+      "berat_g": 40
+    },
+    "kandungan_gizi_per_100g": [
+      {"nama": "energi", "kuantitas": 187.5, "satuan": "kcal"},
+      {"nama": "protein", "kuantitas": 17.5, "satuan": "g"},
+      {"nama": "lemak", "kuantitas": 12.5, "satuan": "g"},
+      {"nama": "karbohidrat", "kuantitas": 0, "satuan": "g"},
+      {"nama": "serat", "kuantitas": 0, "satuan": "g"},
+      {"nama": "zat_besi", "kuantitas": 1.0, "satuan": "mg"},
+      {"nama": "seng", "kuantitas": 1.0, "satuan": "mg"},
+      {"nama": "vit_a_rae", "kuantitas": 7.5, "satuan": "mcg"}
+    ]
+  },
+  {
+    "id": 6,
+    "nama_makanan": "Tempe Goreng",
+    "golongan_dbmp": "Protein",
+    "sub_golongan_protein": "Nabati",
+    "urt_standar": {
+      "jumlah": 2,
+      "satuan": "potong sedang",
+      "berat_g": 50
+    },
+    "kandungan_gizi_per_100g": [
+      {"nama": "energi", "kuantitas": 250, "satuan": "kcal"},
+      {"nama": "protein", "kuantitas": 20.0, "satuan": "g"},
+      {"nama": "lemak", "kuantitas": 15.0, "satuan": "g"},
+      {"nama": "karbohidrat", "kuantitas": 10.0, "satuan": "g"}
+    ]
+  }
+]
