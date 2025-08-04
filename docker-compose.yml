@@ -10,12 +10,10 @@ services:
       MYSQL_USER: tumbuhsehat_user
       MYSQL_PASSWORD: secure_password
       MYSQL_DATABASE: tumbuhsehat_db
-      # Tambahkan variabel lain yang dibutuhkan aplikasi Anda di sini
       JWT_SECRET: ${JWT_SECRET}
       TWILIO_ACCOUNT_SID: ${TWILIO_ACCOUNT_SID}
       TWILIO_AUTH_TOKEN: ${TWILIO_AUTH_TOKEN}
       TWILIO_VERIFY_SID: ${TWILIO_VERIFY_SID}
-    # Perubahan di sini: Tunggu sampai service 'db' statusnya 'healthy'
     depends_on:
       db:
         condition: service_healthy
@@ -34,7 +32,6 @@ services:
       MYSQL_PASSWORD: secure_password
     volumes:
       - db_data:/var/lib/mysql
-    # Tambahan: Blok untuk memeriksa kesehatan database
     healthcheck:
       test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
       interval: 10s
