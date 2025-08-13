@@ -13,7 +13,6 @@ async function requestOtp(req, res) {
     }
 }
 
-// Fungsi untuk verifikasi OTP dan registrasi
 async function verifyAndRegister(req, res) {
     try {
         const { nama, no_telepon, password, otp } = req.body;
@@ -27,14 +26,13 @@ async function verifyAndRegister(req, res) {
     }
 }
 
-// Fungsi untuk login
 async function login(req, res) {
     try {
         const { no_telepon, password } = req.body;
         if (!no_telepon || !password) {
             return res.status(400).json({ message: 'Nomor telepon dan password dibutuhkan.' });
         }
-        
+
         const data = await AuthService.login(no_telepon, password);
         res.status(200).json({ message: 'Login berhasil', data });
 
@@ -43,11 +41,9 @@ async function login(req, res) {
     }
 }
 
-// Fungsi untuk mendapatkan profil (contoh rute terproteksi)
 async function getProfile(req, res) {
-    // Data pengguna didapat dari token yang sudah diverifikasi oleh middleware
     const userData = req.user;
-    
+
     res.status(200).json({
         message: "Profil berhasil diambil",
         data: userData
