@@ -15,7 +15,7 @@ jobs:
       - name: Deploy to VPS
         run: |
           sshpass -p "${{ secrets.VPS_PASS }}" ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "
-            cd /path/to/your/project &&
+            cd pkmbe &&
             git pull origin main &&
             docker compose down &&
             docker compose up -d --build
