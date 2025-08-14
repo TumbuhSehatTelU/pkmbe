@@ -1,0 +1,30 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install sshpass & curl
+        run: sudo apt-get update && sudo apt-get install -y sshpass curl
+
+      - name: Deploy to VPS
+        run: |
+          sshpass -p "${{ secrets.VPS_PASS }}" ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "
+            cd /path/to/your/project &&
+            git pull origin main &&
+            docker compose down &&
+            docker compose up -d --build
+          "
+
+      - name: Health Check
+        run: |
+          echo "Menunggu service siap..."
+          sleep 10
+          sshpass -p "${{ secrets.VPS_PASS }}" ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "
+            curl -f http://localhost:3000 || exit 1
+          "
