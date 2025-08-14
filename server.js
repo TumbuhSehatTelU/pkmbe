@@ -20,6 +20,9 @@ const rekomendasiRoutes = require('./src/routes/rekomendasi.route');
 app.use('/api/auth', authRoutes);
 app.use('/api/anak', anakRoutes);
 app.use('/api', rekomendasiRoutes);
+app.get('/health', (req, res) => {
+    res.json({ status: 'ok' });
+})
 
 async function startServer() {
   try {
