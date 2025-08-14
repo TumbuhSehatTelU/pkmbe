@@ -24,7 +24,13 @@ jobs:
       - name: Health Check
         run: |
           echo "Menunggu service siap..."
-          sleep 10
-          sshpass -p "${{ secrets.VPS_PASS }}" ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "
-            curl -f http://localhost:3000 || exit 1
-          "
+          for i in {1..10}; do
+            if curl -fs http://${{ secrets.VPS_HOST }}:3000/health; then
+              echo "Service siap!"
+              exit 0
+            fi
+            echo "Belum siap, coba lagi..."
+            sleep 3
+          done
+          echo "Service gagal start!"
+          exit 1
