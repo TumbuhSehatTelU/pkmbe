@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user.model');
+const Keluarga = require('../models/keluarga.model');
 require('dotenv').config();
 
 // Impor dan inisialisasi client Twilio
@@ -9,7 +10,6 @@ const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TO
 const verifySid = process.env.TWILIO_VERIFY_SID;
 
 async function requestOtp(no_telepon) {
-    // Cek apakah pengguna sudah ada menggunakan Sequelize
     const userExists = await User.findOne({ where: { no_telepon: no_telepon } });
     if (userExists) {
         throw new Error('Nomor telepon sudah terdaftar.');

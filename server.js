@@ -4,6 +4,7 @@ const express = require('express');
 const sequelize = require('./src/config/database'); 
 const User = require('./src/models/user.model');
 const Anak = require('./src/models/anak.model');
+const Keluarga = require('./src/models/keluarga.model')
 
 const app = express();
 const PORT = process.env.PORT || 3000;
