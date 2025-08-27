@@ -12,7 +12,10 @@ app.use(express.json());
 
 User.hasMany(Anak, { foreignKey: 'userId' });
 Anak.belongsTo(User, { foreignKey: 'userId' });
-
+Keluarga.hasMany(User, { foreignKey: 'keluargaId' });
+User.belongsTo(Keluarga, { foreignKey: 'keluargaId' });
+Keluarga.hasMany(Anak, { foreignKey: 'keluargaId' });
+Anak.belongsTo(Keluarga, { foreignKey: 'keluargaId' });
 const authRoutes = require('./src/routes/auth.route');
 const anakRoutes = require('./src/routes/anak.route');
 const rekomendasiRoutes = require('./src/routes/rekomendasi.route');

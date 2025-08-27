@@ -16,12 +16,13 @@ async function requestOtp(req, res) {
 // Fungsi untuk verifikasi OTP dan registrasi
 async function verifyAndRegister(req, res) {
     try {
-        const { nama, no_telepon, password, otp } = req.body;
-        if (!nama || !no_telepon || !password || !otp) {
-            return res.status(400).json({ message: 'Nama, nomor telepon, password, dan OTP dibutuhkan.' });
-        }
-        const user = await AuthService.verifyAndRegister(nama, no_telepon, password, otp);
-        res.status(201).json({ message: 'Registrasi berhasil', data: user });
+        // kode_keluarga & nama_keluarga bersifat opsional
+        const { nama, no_telepon, password, otp, kode_keluarga, nama_keluarga } = req.body;
+        
+        const result = await AuthService.verifyAndRegister({ 
+            nama, no_telepon, password, otp, kode_keluarga, nama_keluarga 
+        });
+        res.status(201).json({ message: 'Registrasi berhasil', data: result });
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
