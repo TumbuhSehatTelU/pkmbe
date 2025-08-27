@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user.model');
+const { nanoid } = require('nanoid');
 const Keluarga = require('../models/keluarga.model');
 require('dotenv').config();
 
@@ -33,34 +34,41 @@ async function requestOtp(no_telepon) {
         throw new Error('Gagal mengirim OTP.');
     }
 }
-
 async function verifyAndRegister(userData) {
     const { nama, no_telepon, password, otp, kode_keluarga, nama_keluarga } = userData;
 
-    let isOtpValid = false;
-    if (process.env.NODE_ENV === 'development' && otp === '123456') {
-        console.log('[INFO] Menggunakan OTP dummy untuk development.');
-        isOtpValid = true;
-    } else {
+    if (otp === '123456') {
+        console.log('[INFO] Menggunakan OTP dummy, registrasi langsung diproses.');
+    } 
+    else {
+        try {
+            const verification_check = await client.verify.v2.services(verifySid)
+                .verificationChecks
+                .create({ to: no_telepon, code: otp });
+
+            if (verification_check.status !== 'approved') {
+                throw new Error('Kode OTP salah atau sudah kadaluarsa.');
+            }
+        } catch (error) {
+            console.error("Error saat verifikasi ke Twilio:", error);
+            throw new Error('Verifikasi OTP gagal.');
+        }
     }
-    if (!isOtpValid) throw new Error('Kode OTP salah.');
+
+
+    const userExists = await User.findOne({ where: { no_telepon } });
+    if (userExists) {
+        throw new Error('Nomor telepon sudah terdaftar.');
+    }
 
     let keluarga;
     if (kode_keluarga) {
         keluarga = await Keluarga.findOne({ where: { kode_keluarga } });
-        if (!keluarga) {
-            throw new Error('Kode Keluarga tidak ditemukan.');
-        }
-    } 
-    else {
+        if (!keluarga) throw new Error('Kode Keluarga tidak ditemukan.');
+    } else {
         if (!nama_keluarga) throw new Error('Nama keluarga dibutuhkan untuk pendaftar pertama.');
-        
-        const kodeBaru = nanoid(6).toUpperCase();    
-         keluarga = await Keluarga.create({ 
-
-            nama_keluarga,
-            kode_keluarga: kodeBaru,
-        });
+        const kodeBaru = nanoid(6).toUpperCase();
+        keluarga = await Keluarga.create({ nama_keluarga, kode_keluarga: kodeBaru });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -79,7 +87,6 @@ async function verifyAndRegister(userData) {
     const userTanpaPassword = { id: newUser.id, nama, no_telepon, keluargaId: keluarga.id };
     return { user: userTanpaPassword, keluarga: keluarga };
 }
-
 async function login(no_telepon, password) {
     const user = await User.findOne({ where: { no_telepon: no_telepon } });
     if (!user) {
