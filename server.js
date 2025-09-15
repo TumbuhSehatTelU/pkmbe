@@ -9,11 +9,16 @@ const Keluarga = require('./src/models/keluarga.model');
 const Post = require('./src/models/post.model');
 const Reply = require('./src/models/reply.model');
 const PostVote = require('./src/models/postVote.model');
+const Makanan = require('./src/models/makanan.model');
 
+const RiwayatMakan  = require('./src/models/riwayatMakan.model');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
+
+Makanan.hasMany(RiwayatMakan, { foreignKey: 'makananId' });
+RiwayatMakan.belongsTo(Makanan, { foreignKey: 'makananId' });
 
 Keluarga.hasMany(User, { foreignKey: 'keluargaId' });
 User.belongsTo(Keluarga, { foreignKey: 'keluargaId' });
@@ -44,7 +49,9 @@ const postRoutes = require('./src/routes/post.route');
 const replyRoutes = require('./src/routes/reply.route');
 const rekomendasiRoutes = require('./src/routes/rekomendasi.route');
 const keluargaRoutes = require('./src/routes/keluarga.route')
+const makananRoutes = require('./src/routes/makanan.route');
 
+app.use('/api/makanan', makananRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/anak', anakRoutes);
 app.use('/api/posts', postRoutes);

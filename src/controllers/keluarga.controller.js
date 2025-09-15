@@ -1,4 +1,4 @@
-const KeluargaService = require('../services/keluarga.service');
+const KeluargaService = require('../service/keluarga.service');
 
 async function getDetailKeluarga(req, res) {
     try {
