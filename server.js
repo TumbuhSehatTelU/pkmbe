@@ -3,30 +3,26 @@ require('dotenv').config();
 const express = require('express');
 const sequelize = require('./src/config/database');
 
-const User = require('./src/models/user.model');
-const Anak = require('./src/models/anak.model');
-const Keluarga = require('./src/models/keluarga.model');
-const Post = require('./src/models/post.model');
-const Reply = require('./src/models/reply.model');
-const PostVote = require('./src/models/postVote.model');
-const Makanan = require('./src/models/makanan.model');
+const { User, Anak, Keluarga, Post, Reply, PostVote, Makanan, RiwayatMakan } = require('./src/models');
 
-const RiwayatMakan  = require('./src/models/riwayatMakan.model');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
-Makanan.hasMany(RiwayatMakan, { foreignKey: 'makananId' });
-RiwayatMakan.belongsTo(Makanan, { foreignKey: 'makananId' });
-
+// --- Definisikan Semua Relasi Sequelize ---
 Keluarga.hasMany(User, { foreignKey: 'keluargaId' });
 User.belongsTo(Keluarga, { foreignKey: 'keluargaId' });
 
 Keluarga.hasMany(Anak, { foreignKey: 'keluargaId' });
 Anak.belongsTo(Keluarga, { foreignKey: 'keluargaId' });
 
-// Relasi Fitur Komunitas
+Anak.hasMany(RiwayatMakan, { foreignKey: 'anakId' });
+RiwayatMakan.belongsTo(Anak, { foreignKey: 'anakId' });
+
+Makanan.hasMany(RiwayatMakan, { foreignKey: 'makananId' });
+RiwayatMakan.belongsTo(Makanan, { foreignKey: 'makananId' });
+
 User.hasMany(Post, { foreignKey: 'userId' });
 Post.belongsTo(User, { foreignKey: 'userId' });
 
@@ -42,22 +38,25 @@ Reply.belongsTo(Reply, { as: 'parent', foreignKey: 'parentId' });
 User.belongsToMany(Post, { through: PostVote, foreignKey: 'userId' });
 Post.belongsToMany(User, { through: PostVote, foreignKey: 'postId' });
 
-
 const authRoutes = require('./src/routes/auth.route');
 const anakRoutes = require('./src/routes/anak.route');
+const keluargaRoutes = require('./src/routes/keluarga.route');
+const makananRoutes = require('./src/routes/makanan.route');
 const postRoutes = require('./src/routes/post.route');
 const replyRoutes = require('./src/routes/reply.route');
 const rekomendasiRoutes = require('./src/routes/rekomendasi.route');
-const keluargaRoutes = require('./src/routes/keluarga.route')
-const makananRoutes = require('./src/routes/makanan.route');
 
-app.use('/api/makanan', makananRoutes);
+app.get('/health', (req, res) => {
+    res.status(200).json({ status: 'UP', message: 'Server is healthy' });
+});
+
 app.use('/api/auth', authRoutes);
 app.use('/api/anak', anakRoutes);
+app.use('/api/keluarga', keluargaRoutes);
+app.use('/api/makanan', makananRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/replies', replyRoutes);
 app.use('/api', rekomendasiRoutes);
-app.use('/api/keluarga', keluargaRoutes);
 
 async function startServer() {
   try {
@@ -72,7 +71,7 @@ async function startServer() {
     });
 
   } catch (error) {
-    console.error('❌ Gagal memulai server:', error.message);
+    console.error('❌ Gagal memulai server:', error);
     process.exit(1);
   }
 }
