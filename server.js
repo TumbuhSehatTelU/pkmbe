@@ -43,13 +43,14 @@ const anakRoutes = require('./src/routes/anak.route');
 const postRoutes = require('./src/routes/post.route');
 const replyRoutes = require('./src/routes/reply.route');
 const rekomendasiRoutes = require('./src/routes/rekomendasi.route');
+const keluargaRoutes = require('./src/routes/keluarga.route')
 
 app.use('/api/auth', authRoutes);
 app.use('/api/anak', anakRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/replies', replyRoutes);
 app.use('/api', rekomendasiRoutes);
-
+app.use('/api/keluarga', keluargaRoutes);
 
 async function startServer() {
   try {
