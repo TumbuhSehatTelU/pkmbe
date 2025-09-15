@@ -17,7 +17,7 @@ async function getAllMakanan(req, res) {
         res.status(500).json({ message: error.message });
     }
 }
-
+//
 async function getMakananById(req, res) {
     try {
         const makanan = await MakananService.getMakananById(req.params.id);
